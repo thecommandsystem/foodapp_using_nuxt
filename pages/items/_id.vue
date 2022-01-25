@@ -22,34 +22,54 @@
               <v-text-field label="1" solo v-model="count"></v-text-field>
             </v-col>
             <v-col>
-              <v-btn depressed color="primary"> Add to cart - ${{ combinedPrice }} </v-btn>
+              <v-btn depressed color="primary">
+                Add to cart - ${{ combinedPrice }}
+              </v-btn>
             </v-col>
           </v-row>
-          
+        </div>
+        <div v-if="currentItem.options" class="pa-2">
+          <v-card class="pa-2">
+            <v-card-title> options </v-card-title>
+            <div
+              v-for="option in currentItem.addOns"
+              :key="option"
+              class="pa-2"
+            >
+              <v-checkbox
+                v-model="itemOptions"
+                :label="option"
+                color="red"
+                :value="option"
+                hide-details
+              ></v-checkbox>
+            </div>
+          </v-card>
         </div>
 
-        <div v-for="option in currentItem.addOns" :key="option" class="pa-2" >
-          
-             <v-checkbox
-              v-model="itemAddons"
-              :label="option"
-              color="red"
-              :value="option"
-              hide-details
-            >{{ option}}</v-checkbox>
-        
+        <div v-if="currentItem.addOns" class="pa-2">
+          <v-card>
+            <v-card-title> Addons </v-card-title>
+            <div v-for="option in currentItem.addOns" :key="option">
+              <v-checkbox
+                class="pa-2"
+                v-model="itemAddons"
+                :label="option"
+                color="red"
+                :value="option"
+                hide-details
+              ></v-checkbox>
+            </div>
+          </v-card>
         </div>
-
       </v-col>
     </v-row>
 
     <div class="pa-2">
-
-       <h3>Description</h3>
+      <h3>Description</h3>
       <p>{{ currentItem.description }}</p>
-     
     </div>
-   
+ 
   </div>
 </template>
 
@@ -82,8 +102,8 @@ export default {
     },
     combinedPrice() {
       let total = this.count * this.currentItem.price;
-      return total.toFixed(2)
-    }
+      return total.toFixed(2);
+    },
   },
 };
 </script>
