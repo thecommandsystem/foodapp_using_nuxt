@@ -1,0 +1,92 @@
+<template>
+  <div class="pa-5">
+    <v-row no-gutters>
+      <v-col cols="4">
+        <v-card class="pa-2" outlined tile>
+          <v-img :src="currentItem.img" height="500px" :eager="true"></v-img>
+        </v-card>
+      </v-col>
+      <v-col cols="6">
+        <div class="pl-2">
+          <v-card class="pa-2" outlined tile>
+            <div>
+              <h1>{{ currentItem.item }}</h1>
+            </div>
+
+            <h3>Price: ${{ currentItem.price.toFixed(2) }}</h3>
+          </v-card>
+        </div>
+        <div class="pa-2">
+          <v-row>
+            <v-col>
+              <v-text-field label="1" solo v-model="count"></v-text-field>
+            </v-col>
+            <v-col>
+              <v-btn depressed color="primary"> Add to cart - ${{ combinedPrice }} </v-btn>
+            </v-col>
+          </v-row>
+          
+        </div>
+
+        <div v-for="option in currentItem.addOns" :key="option" class="pa-2" >
+          
+             <v-checkbox
+              v-model="itemAddons"
+              :label="option"
+              color="red"
+              :value="option"
+              hide-details
+            >{{ option}}</v-checkbox>
+        
+        </div>
+
+      </v-col>
+    </v-row>
+
+    <div class="pa-2">
+
+       <h3>Description</h3>
+      <p>{{ currentItem.description }}</p>
+     
+    </div>
+   
+  </div>
+</template>
+
+<script>
+import { mapState } from "vuex";
+export default {
+  data() {
+    return {
+      id: this.$route.params.id,
+      count: 1,
+      itemOptions: "",
+      itemAddons: [],
+      itemSizeAndCost: [],
+    };
+  },
+  computed: {
+    ...mapState(["fooddata"]),
+    currentItem() {
+      let result;
+      for (let i = 0; i < this.fooddata.length; i++) {
+        for (let j = 0; j < this.fooddata[i].menu.length; j++) {
+          if (this.fooddata[i].menu[j].id === this.id) {
+            result = this.fooddata[i].menu[j];
+            break;
+          }
+        }
+      }
+
+      return result;
+    },
+    combinedPrice() {
+      let total = this.count * this.currentItem.price;
+      return total.toFixed(2)
+    }
+  },
+};
+</script>
+
+<style>
+</style>

@@ -20,7 +20,10 @@
               </div>
 
               <v-card-actions>
-                <v-btn color="orange lighten-2" text> Explore </v-btn>
+                <nuxt-link :to="`/items/${menuitem.id}`">
+                  <v-btn color="orange lighten-2" text> Explore </v-btn>
+                </nuxt-link>
+                
               </v-card-actions>
             </v-card>
           </div>

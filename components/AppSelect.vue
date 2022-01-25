@@ -38,7 +38,7 @@
         </v-toolbar>
       </template>
     </v-data-iterator>
-    <pre>{{ $data }}</pre>
+
   </div>
 </template>
 
