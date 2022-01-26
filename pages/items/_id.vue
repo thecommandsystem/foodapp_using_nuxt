@@ -8,13 +8,11 @@
       </v-col>
       <v-col cols="6">
         <div class="pl-2">
-          <v-card class="pa-2" outlined tile>
-            <div>
-              <h1>{{ currentItem.item }}</h1>
-            </div>
+          <div>
+            <h1>{{ currentItem.item }}</h1>
+          </div>
 
-            <h3>Price: ${{ currentItem.price.toFixed(2) }}</h3>
-          </v-card>
+          <h3>Price: ${{ currentItem.price.toFixed(2) }}</h3>
         </div>
         <div class="pa-2">
           <v-row>
@@ -22,7 +20,7 @@
               <v-text-field label="1" solo v-model="count"></v-text-field>
             </v-col>
             <v-col>
-              <v-btn depressed color="primary">
+              <v-btn depressed color="primary" @click="addtoCart">
                 Add to cart - ${{ combinedPrice }}
               </v-btn>
             </v-col>
@@ -63,13 +61,22 @@
           </v-card>
         </div>
       </v-col>
+      <v-col >
+        <v-card v-if="cartSubmitted">
+          <div class="pa-2 ">
+            <AppToast 
+              >Order Submited <br />
+              Check out more <nuxt-link to="/restaurant">Restaurant</nuxt-link>
+            </AppToast>
+          </div>
+        </v-card>
+      </v-col>
     </v-row>
 
     <div class="pa-2">
       <h3>Description</h3>
       <p>{{ currentItem.description }}</p>
     </div>
- 
   </div>
 </template>
 
@@ -83,6 +90,7 @@ export default {
       itemOptions: "",
       itemAddons: [],
       itemSizeAndCost: [],
+      cartSubmitted: false,
     };
   },
   computed: {
@@ -105,6 +113,19 @@ export default {
       return total.toFixed(2);
     },
   },
+  methods: {
+    addtoCart() {
+      let formOutput = {
+        item: this.currentItem.item,
+        count: this.count,
+        options: this.itemOptions,
+        addOns: this.itemAddons, 
+        combinedPrice: this.combinedPrice
+      }
+
+       this.cartSubmitted = true
+    }
+  }
 };
 </script>
 
