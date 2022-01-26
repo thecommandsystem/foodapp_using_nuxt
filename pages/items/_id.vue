@@ -61,10 +61,10 @@
           </v-card>
         </div>
       </v-col>
-      <v-col >
+      <v-col>
         <v-card v-if="cartSubmitted">
-          <div class="pa-2 ">
-            <AppToast 
+          <div class="pa-2">
+            <AppToast
               >Order Submited <br />
               Check out more <nuxt-link to="/restaurant">Restaurant</nuxt-link>
             </AppToast>
@@ -119,13 +119,14 @@ export default {
         item: this.currentItem.item,
         count: this.count,
         options: this.itemOptions,
-        addOns: this.itemAddons, 
-        combinedPrice: this.combinedPrice
-      }
+        addOns: this.itemAddons,
+        combinedPrice: this.combinedPrice,
+      };
 
-       this.cartSubmitted = true
-    }
-  }
+      this.cartSubmitted = true;
+      this.$store.commit("addToCart", formOutput);
+    },
+  },
 };
 </script>
 
