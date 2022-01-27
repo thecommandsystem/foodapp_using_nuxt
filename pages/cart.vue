@@ -1,20 +1,20 @@
 <template>
 <v-container>
-   <div v-for="item in cart" :key="item.id">
+   
     <v-data-table
       dense
       :headers="headers"
-      :items="item.item"
+      :items="carts"
       item-key="name"
       class="elevation-1"
     ></v-data-table>
-  </div>
+
 </v-container>
  
 </template>
 
 <script>
-import { mapState } from "vuex";
+
 
 export default {
   data() {
@@ -31,11 +31,12 @@ export default {
         { text: "Total Price", value: "carbs" },
       
       ],
+      carts: []
     };
   },
   computed: {
     cart() {
-      return this.$store.state.cart;
+      return this.carts = this.$store.state.cart;
     },
   },
 };
